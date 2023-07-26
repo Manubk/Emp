@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row" *ngIf="role == 'admin'">
+        <div class="col m-3">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fa-solid fa-plus"></i>
+            Add
+          </button>
+        </div>
+      </div>
+
+      <!--Add Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #empForm="ngForm" (ngSubmit)="addEmp(empForm)" id="empForm" >
+                  <div class="col mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" class="form-control" type="text" required="true" name="empName" ngModel>
+                  </div>
+
+                  <div class="col mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="empEmail" ngModel>
+                  </div>
+
+                  <div class="col mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="empPass" ngModel>
+                  </div>
+
+                  <div class="col mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select name="role" class="form-select" id="role" name="empRole" ngModel>
+                      <option >-- Select --</option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" form="empForm">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+       <!--Update Modal -->
+       <div class="modal fade" id="updateModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Update Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form  id="empEditForm" >
+                  <div class="col mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" class="form-control" type="text" required="true" name="empName" [(ngModel)]="selectedEmp.empName" >
+                  </div>
+
+                  <div class="col mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="empEmail" [(ngModel)]="selectedEmp.empEmail">
+                  </div>
+
+                  <div class="col mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="empPass" [(ngModel)]="selectedEmp.empPass">
+                  </div>
+
+                  <div class="col mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select name="role" class="form-select" id="role" name="empRole" [(ngModel)]="selectedEmp.empRole">
+                      <option >-- Select --</option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" (click)="updateEmp()" form="empEditForm">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sl No</th>
+            <th scope="col"> Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let emp of emps; let i = index">
+            <th>{{i+1}}</th>
+            <td>{{emp.empName}}</td>
+            <td>{{emp.empEmail}}</td>
+            <td>{{emp.empRole}}</td>
+            <td>
+              <button class="btn-outline-danger m-1" (click)="deleteEmp(emp.empId)"><i class="fa-solid fa-trash"></i></button>
+              <button class="btn-outline-warning" (click)="editEmp(emp)" data-bs-toggle="modal" data-bs-target="#updateModel"><i class="fa-solid fa-pen-to-square"></i></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
